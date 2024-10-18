@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee List</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="display.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const employeeTable = document.getElementById('employeeTable');
+      const employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+      console.log('Retrieved employees:', employees);
+
+      if (employees.length === 0) {
+        const row = employeeTable.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 4;
+        cell.textContent = 'No employees found';
+      } else {
+        employees.forEach(employee => {
+          const row = employeeTable.insertRow();
+          Object.values(employee).forEach(value => {
+            const cell = row.insertCell();
+            cell.textContent = value;
+          });
+        });
+      }
+
+
+      document.getElementById('clearData').addEventListener('click', () => {
+        localStorage.removeItem('employees');
+        location.reload();
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="header">
+    <h2>Employee List</h2>
+  </div>
+  <div class="employee-list-container">
+    <table id="employeeTable">
+      <tr>
+        <th>Name</th>
+        <th>Phone Number</th>
+        <th>Employee ID</th>
+        <th>Gender</th>
+      </tr>
+    </table>
+    
+    <div class="button-container">
+      <button onclick="window.location.href='login.html'">Return to Login</button>
+      <button id="clearData">Clear Data</button>
+    </div>
+  </div>
+</body>
+</html>
